@@ -1,5 +1,9 @@
 Revision history for Perl extension Math::FFT.
 
+0.26  Sat Dec 04 2004
+     - include "arrays.h" in FFT.xs (required for some platforms)
+       (thanks to Doug Shubert)
+
 0.25  Thu Dec 28 2000
      - implement the routines of arrays.c of PGPLOT to pass
        arrays to and from C

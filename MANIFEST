@@ -15,3 +15,4 @@ t/results.pl
 t/spctrl.dat
 arrays.c
 arrays.h
+META.yml                                 Module meta-data (added by MakeMaker)

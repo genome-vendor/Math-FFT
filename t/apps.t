@@ -74,7 +74,7 @@ $num++;
 my $data;
 # The following data file is taken from the test of the power
 # spectrum routine of Numerical Recipes in C
-open(SPCTRL, 'spctrl.dat')
+open(SPCTRL, 't/spctrl.dat')
   or die "Cannot open spctrl.dat: $!";
 while (<SPCTRL>) {
   chomp $_;
@@ -83,7 +83,7 @@ while (<SPCTRL>) {
 }
 close (SPCTRL);
 my $max = 15;
-require 'results.pl' or die "Cannot: $!";
+require 't/results.pl' or die "Cannot: $!";
 my $results = results();
 my $s = new Math::FFT($data);
 my $tol = 2e-05;

@@ -10,7 +10,7 @@ require DynaLoader;
 # names by default without a very good reason. Use EXPORT_OK instead.
 # Do not simply export all your public functions/methods/constants.
 
-$VERSION = '0.25';
+$VERSION = '0.26';
 
 bootstrap Math::FFT $VERSION;
 
@@ -1072,7 +1072,7 @@ at http://momonga.t.u-tokyo.ac.jp/~ooura/fft.html, which is
 copyrighted 1996-99 by Takuya OOURA. The file arrays.c included 
 here to handle passing arrays to and from C comes from the PGPLOT 
 module of Karl Glazebrook <kgb@aaoepp.aao.gov.au>. The perl code 
-of Math::FFT is copyright 2000 by Randy Kobes, and is distributed 
+of Math::FFT is copyright 2000,2004 by Randy Kobes, and is distributed 
 under the same terms as Perl itself.
 
 =cut
