@@ -1,5 +1,8 @@
 Revision history for Perl extension Math::FFT.
 
+0.28  Sun Aug 28 2005
+     - fix version mistake in META.yml
+
 0.27  Sun Aug 28 2005
      - add method to calculate root mean square of data (suggested
        by Robert Hiller)
