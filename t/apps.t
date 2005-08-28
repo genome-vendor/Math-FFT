@@ -94,10 +94,10 @@ $spec = $s->spctrm(segments => 16, number=> 16, overlap => 1);
 check_error($num, 0, $max, $spec, $results->{unity}->{ov}, $tol);
 $num++;
 
-$spec = $s->spctrm(segments => 32, number=> 16, overlap => 0, window => 'hamm');
+$spec = $s->spctrm(segments => 32, number=> 16, overlap => 0, window => 'hann');
 check_error($num, 0, $max, $spec, $results->{hamm}->{no}, $tol);
 $num++;
-$spec = $s->spctrm(segments => 16, number=> 16, overlap => 1, window => 'hamm');
+$spec = $s->spctrm(segments => 16, number=> 16, overlap => 1, window => 'hann');
 check_error($num, 0, $max, $spec, $results->{hamm}->{ov}, $tol);
 $num++;
 

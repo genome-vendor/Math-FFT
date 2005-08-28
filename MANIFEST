@@ -1,6 +1,7 @@
 Changes
 README
 INSTALL
+META.yml
 FFT.pm
 FFT.xs
 FFT.h
@@ -15,4 +16,3 @@ t/results.pl
 t/spctrl.dat
 arrays.c
 arrays.h
-META.yml                                 Module meta-data (added by MakeMaker)

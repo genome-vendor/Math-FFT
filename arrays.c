@@ -514,7 +514,7 @@ void unpack1D ( SV* arg, void * var, char packtype, int n ) {
    double* dvar;
    short* svar;
    unsigned char* uvar;
-   SV* work;
+   /* SV* work; */
    AV* array;
    I32 i,m;
 

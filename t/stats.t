@@ -6,7 +6,7 @@
 # Change 1..1 below to 1..last_test_to_print .
 # (It may become useful if the test is moved to ./t subdirectory.)
 
-BEGIN { $| = 1; print "1..7\n"; }
+BEGIN { $| = 1; print "1..8\n"; }
 END {print "not ok 1\n" unless $loaded;}
 use Math::FFT;
 $loaded = 1;
@@ -26,6 +26,9 @@ check_value($num, 52, $mean);
 $num++;
 my $std = $d->stdev;
 check_value($num, 13*sqrt(290)/2, $std);
+$num++;
+my $rms = $d->rms;
+check_value($num, sqrt(12506), $rms);
 $num++;
 my ($min, $max) = $d->range;
 check_value($num, 1, $min);

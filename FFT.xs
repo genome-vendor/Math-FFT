@@ -1,11 +1,20 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
 #include "arrays.h"
 #include "FFT.h"
 
+#ifdef __cplusplus
+}
+#endif
 
 MODULE = Math::FFT		PACKAGE = Math::FFT		
+
+PROTOTYPES: DISABLE
 
 void 
 _cdft(n, isgn, a, ip, w)

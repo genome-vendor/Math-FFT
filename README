@@ -27,23 +27,12 @@ included for analyzing real data sets. These are
 - stdev: Find the standard deviation of a data set
 - range: Find the minimum and maximum values of a data set
 - median: Find the median of a data set
-
-This module requires a C compiler to build. A prebuilt ppm
-package, suitable for Win32 ActivePerl, is
-available via
-
- ppm install http://theoryx5.uwinnipeg.ca/ppms/Math-FFT.ppd
-
-for builds 8xx, and at
-
- ppm install http://theoryx5.uwinnipeg.ca/ppmpackages/Math-FFT.ppd
-
-for 8xx builds.
+- rms: Find the root mean square of a data set
 
 The C code for the FFT routines of fft4g.c is copyrighted 1996-99 
 by Takuya OOURA. The file arrays.c included here to handle
 passing arrays to and from C comes from the PGPLOT module
 of Karl Glazebrook <kgb@aaoepp.aao.gov.au>. The perl 
-interface of the Math::FTT module is Copyright 2000,2004 
-by Randy Kobes <randy@theoryx5.uwinnipeg.ca>, and may be
+interface of the Math::FTT module is Copyright 2000,2005 
+by Randy Kobes <r.kobes@uwinnipeg.ca>, and may be
 distributed under the same terms as Perl itself.

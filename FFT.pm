@@ -10,7 +10,7 @@ require DynaLoader;
 # names by default without a very good reason. Use EXPORT_OK instead.
 # Do not simply export all your public functions/methods/constants.
 
-$VERSION = '0.26';
+$VERSION = '0.27';
 
 bootstrap Math::FFT $VERSION;
 
@@ -61,7 +61,7 @@ sub clone {
 sub cdft {
   my $self = shift;
   my $n = $self->{n};
-  die 'size of data must be an integer power of 2' unless check_n($n);
+  die "data size ($n) must be an integer power of 2" unless check_n($n);
   my $data = [ @{$self->{data}} ];
   _cdft($n, 1, $data, $self->{ip}, $self->{w});
   $self->{type} = 'cdft';
@@ -95,7 +95,7 @@ sub invcdft {
 sub rdft {
   my $self = shift;
   my $n = $self->{n};
-  die 'size of data must be an integer power of 2' unless check_n($n);
+  die "data size ($n) must be an integer power of 2" unless check_n($n);
   my $data = [ @{$self->{data}} ];
   _rdft($n, 1, $data, $self->{ip}, $self->{w});
   $self->{type} = 'rdft';
@@ -129,7 +129,7 @@ sub invrdft {
 sub ddct {
   my $self = shift;
   my $n = $self->{n};
-  die 'size of data must be an integer power of 2' unless check_n($n);
+  die "data size ($n) must be an integer power of 2" unless check_n($n);
   my $data = [ @{$self->{data}} ];
   _ddct($n, -1, $data, $self->{ip}, $self->{w});
   $self->{type} = 'ddct';
@@ -164,7 +164,7 @@ sub invddct {
 sub ddst {
   my $self = shift;
   my $n = $self->{n};
-  die 'size of data must be an integer power of 2' unless check_n($n);
+  die "data size ($n) must be an integer power of 2" unless check_n($n);
   my $data = [ @{$self->{data}} ];
   _ddst($n, -1, $data, $self->{ip}, $self->{w});
   $self->{type} = 'ddst';
@@ -200,7 +200,7 @@ sub dfct {
   my $self = shift;
   my $np1 = $self->{n};
   my $n = $np1 - 1;
-  die 'size of data must be an integer power of 2' unless check_n($n);
+  die "data size ($n) must be an integer power of 2" unless check_n($n);
   my $nt = int(2 + $n/2);
   my $t = [];
   my $data = [ @{$self->{data}} ];
@@ -243,7 +243,7 @@ sub invdfct {
 sub dfst {
   my $self = shift;
   my $n = $self->{n};
-  die 'size of data must be an integer power of 2' unless check_n($n);
+  die "data size ($n) must be an integer power of 2" unless check_n($n);
   my $data = [ @{$self->{data}} ];
   my $nt = int(2 + $n/2);
   my $t = [];
@@ -366,7 +366,7 @@ sub spctrm {
   }
   my $win_fun = $args{window};
   if ($win_fun and ref($win_fun) ne 'CODE') {
-    my %accept = map {$_ => 1} qw(hamm welch bartlett);
+    my %accept = map {$_ => 1} qw(hamm hann welch bartlett);
     die "`$win_fun' is not a known window function in spctrm"
       if not $accept{$win_fun};
   }
@@ -382,6 +382,11 @@ sub spctrm {
 		   my $pi = 4.0*atan2(1,1);
 		   return (1 - cos(2*$pi*$j/$n))/2;
 		 },
+		 'hann' => sub {
+		   my ($j, $n) = @_;
+		   my $pi = 4.0*atan2(1,1);
+		   return (1 - cos(2*$pi*$j/$n))/2;
+		 },
 		 'welch' => sub {
 		   my ($j, $n) = @_;
 		   return 1 - 4*($j-$n/2)*($j-$n/2)/$n/$n;
@@ -391,7 +396,8 @@ sub spctrm {
 		   return 1 - abs(2*($j-$n/2)/$n);
 		 },
 		};
-  if (not $args{segments} or $args{segments} == 1) {
+  if (not $args{segments} or ($args{segments} == 1 and not $args{number})) {
+    die "data size ($n) must an integer power of 2" unless check_n($n);
     if ($win_fun) {
       $d = [ @{$self->{data}}];
       $win_fun = $win_sub->{$win_fun} if ref($win_fun) ne 'CODE';
@@ -485,6 +491,23 @@ sub mean {
   my $mean = $sum / $n;
   $self->{mean} = $mean unless $flag == 1;
   return $mean;
+}
+
+sub rms {
+  my $self = shift;
+  my $sum = 0;
+  my ($n, $data);
+  if ($data = shift) {
+    die 'Must call with an array reference'
+      unless ref($data) eq 'ARRAY';
+    $n = @$data;
+  }
+  else {
+    $data = $self->{data};
+    $n = $self->{n};
+  }
+  $sum += $_*$_ for @$data;
+  return sqrt($sum / $n);
 }
 
 sub stdev {
@@ -959,14 +982,14 @@ of such functions are
 
 
            1   /                    \
-  w[j] =  ---  |1 - cos(2 pi j / N) |     ... Hamm  
+  w[j] =  ---  |1 - cos(2 pi j / N) |     ... Hann  
            2   \                    /
 
 
 The C<spctrm> method, used as
 
     $fft = Math::FFT->new($data);
-    $spectrum = $fft->spctrm([$key => $value, ...]);
+    $spectrum = $fft->spctrm(%options);
 
 returns an array reference C<$spectrum> representing the power 
 spectrum for a data set represented by an array reference C<$data>.
@@ -978,7 +1001,7 @@ The options available are
 
 This specifies the window function; if not given, no such
 function is used. Accepted values (see above) are C<"bartlett">, 
-C<"welch">, C<"hamm">, and C<\&my_window>, where C<my_window> is a 
+C<"welch">, C<"hann">, and C<\&my_window>, where C<my_window> is a 
 user specified subroutine which must be of the form, for example,
 
    sub my_window {
@@ -1039,6 +1062,15 @@ This returns the standard deviation
 If an array reference C<$data> is not given, the data set used 
 in creating C<$fft> will be used.
 
+=item C<$rms = $fft-E<gt>rms([$data]);>
+
+This returns the root mean square
+
+  sqrt{ 1/N * sum_j=0^N-1 (data[j])**2 }
+
+If an array reference C<$data> is not given, the data set used 
+in creating C<$fft> will be used.
+
 =item C<($min, $max) = $fft-E<gt>range([$data]);>
 
 This returns the minimum and maximum values of the data set.
@@ -1072,7 +1104,7 @@ at http://momonga.t.u-tokyo.ac.jp/~ooura/fft.html, which is
 copyrighted 1996-99 by Takuya OOURA. The file arrays.c included 
 here to handle passing arrays to and from C comes from the PGPLOT 
 module of Karl Glazebrook <kgb@aaoepp.aao.gov.au>. The perl code 
-of Math::FFT is copyright 2000,2004 by Randy Kobes, and is distributed 
-under the same terms as Perl itself.
+of Math::FFT is copyright 2000,2005 by Randy Kobes <r.kobes@uwinnipeg.ca>,
+and is distributed under the same terms as Perl itself.
 
 =cut

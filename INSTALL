@@ -7,10 +7,15 @@ execute the sequence
    make install
 
 Win32 users should use the 'make' program on their system.
-A ppm package, suitable for Win32 ActivePerl (builds 6xx),
-is available via
+A ppm package, suitable for Win32 ActivePerl, is available via
 
  ppm install http://theoryx5.uwinnipeg.ca/ppmpackages/Math-FFT.ppd
+
+for ActivePerl 6xx, or at
+
+ ppm install http://theoryx5.uwinnipeg.ca/ppms/Math-FFT.ppd
+
+for ActivePerl 8xx.
 
 If you do not have permission to install modules in the
 Perl site tree on your system, you can install this in
@@ -31,4 +36,4 @@ directory, or else put
 
 at the top of your script.
 
-Randy Kobes <randy@theoryx5.uwinnipeg.ca>
+Randy Kobes <r.kobes@uwinnipeg.ca>
