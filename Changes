@@ -1,5 +1,8 @@
 Revision history for Perl extension Math::FFT.
 
+1.28  Sat Sep 03 2005
+     - bump version so PAUSE ignores deleted 1.27 package
+
 0.28  Sun Aug 28 2005
      - fix version mistake in META.yml
 
