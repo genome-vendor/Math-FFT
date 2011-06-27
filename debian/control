@@ -1,0 +1,23 @@
+Source: libmath-fft-perl
+Section: perl
+Priority: optional
+Build-Depends: debhelper (>= 7), perl
+Maintainer: Randy Hancock <rhancock@>
+Standards-Version: 3.8.3
+Homepage: http://search.cpan.org/dist/Math-FFT/
+
+Package: libmath-fft-perl
+Architecture: any
+Depends: ${perl:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Perl extension for Fast Fourier Transforms
+ Math::FFT implements some algorithms for calculating Fast Fourier Transforms
+ for one-dimensional data sets of size 2^n. The data, assumed to arise from a
+ constant sampling rate, is represented by an array reference $data (as
+ described in the methods below), which is then used to create a Math::FFT
+ object as
+ .
+ my $fft = new Math::FFT($data);
+ .
+ The methods available include the following.
+ .
+ This description was automagically extracted from the module by dh-make-perl.

@@ -1,0 +1,5 @@
+libmath-fft-perl (1.28-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Randy Hancock <rhancock@>  Mon, 27 Jun 2011 15:32:57 -0500
