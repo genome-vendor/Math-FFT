@@ -1,3 +1,9 @@
+libmath-fft-perl (1.28-2~Ubuntu~precise) unstable; urgency=low
+
+  * Recompile for precise
+
+ -- Anthony Brummett <abrummet@genome.wustl.edu>  Wed, 26 Sep 2012 14:49:00 -0500
+
 libmath-fft-perl (1.28-1) unstable; urgency=low
 
   * Initial Release.
